@@ -6,12 +6,24 @@ namespace Lab3
     {
         static void Main(string[] args)
         {
-            var field = new PlayingField();
+            var field = new PlayingField(3);
             field.GenerateBasicField();
-            field.Transposing();
             
-            OutputPlayingField console = new OutputPlayingField();
+            var console = new OutputPlayingField();
+            console.ConsoleOutput(field.Field);
+            
+            MyDelegate[] func = new MyDelegate[5];
+
+            func[0] = field.Transposing;
+            func[1] = field.Swap_Rows;
+            func[2] = field.Swap_Columns;
+            func[3] = field.Swap_Rows_Area;
+            func[4] = field.Swap_Columns_Area;
+            
             console.ConsoleOutput(field.Field);
         }
     }
+    
+    delegate void MyDelegate();
+
 }
