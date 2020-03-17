@@ -2,12 +2,12 @@ using System;
 
 namespace Lab3
 {
-    public class OutputPlayingField
+    public static class OutputPlayingField
     {
         private const string Gap = "   -----------------------------------";
         private const string Numeration = "     1  2  3     4  5  6     7  8  9";
         
-        public void ConsoleOutput(int [,] array)
+        public static void ConsoleOutput(int [,] array)
         {
             Console.WriteLine(Numeration);
             

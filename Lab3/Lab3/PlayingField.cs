@@ -32,7 +32,7 @@ namespace Lab3
             }
         }
 
-        public void Transposing()
+        private void Transposing()
         {
             for (var i = 0; i < N * N; i++)
             {
@@ -45,7 +45,7 @@ namespace Lab3
             }
         }
 
-        public void Swap_Rows()
+        private void Swap_Rows()
         {
             var (randomLine1, randomLine2) = Randomizer.Generate_Random_Lines(N);
             for (var j = 0; j < N * N; j++)
@@ -56,7 +56,7 @@ namespace Lab3
             }
         }
 
-        public void Swap_Columns()
+        private void Swap_Columns()
         {
             var (randomLine1, randomLine2) = Randomizer.Generate_Random_Lines(N);
             for (var j = 0; j < N * N; j++)
@@ -67,7 +67,7 @@ namespace Lab3
             }
         }
 
-        public void Swap_Rows_Area()
+        private void Swap_Rows_Area()
         {
             var (randomArea1, randomArea2) = Randomizer.Generate_Random_Areas(N);
             for (var i = 0; i < N; i++)
@@ -79,9 +79,9 @@ namespace Lab3
                     Field[randomArea2 * N + i, j] = temp;
                 }
             }
+
         }
-        
-        public void Swap_Columns_Area()
+        private void Swap_Columns_Area()
         {
             var (randomArea1, randomArea2) = Randomizer.Generate_Random_Areas(N);
             for (var i = 0; i < N; i++)
@@ -94,5 +94,27 @@ namespace Lab3
                 }
             }
         }
+        
+        private delegate void MyDelegate();
+        public void Create_Unique_Field()
+        {
+            MyDelegate[] manipulationWithField = new MyDelegate[5];
+
+            manipulationWithField[0] = Transposing;
+            manipulationWithField[1] = Swap_Rows;
+            manipulationWithField[2] = Swap_Columns;
+            manipulationWithField[3] = Swap_Rows_Area;
+            manipulationWithField[4] = Swap_Columns_Area;
+           
+            var rnd = new Random();
+            
+            for (var i = 0; i < 10; i++)
+            {
+                var randomAction = rnd.Next(0, 5);
+                manipulationWithField[randomAction]();
+            }
+        }
+        
+        
     }
 }

@@ -9,21 +9,12 @@ namespace Lab3
             var field = new PlayingField(3);
             field.GenerateBasicField();
             
-            var console = new OutputPlayingField();
-            console.ConsoleOutput(field.Field);
-            
-            MyDelegate[] func = new MyDelegate[5];
+            OutputPlayingField.ConsoleOutput(field.Field);
 
-            func[0] = field.Transposing;
-            func[1] = field.Swap_Rows;
-            func[2] = field.Swap_Columns;
-            func[3] = field.Swap_Rows_Area;
-            func[4] = field.Swap_Columns_Area;
+            field.Create_Unique_Field();
+            OutputPlayingField.ConsoleOutput(field.Field);
+
             
-            console.ConsoleOutput(field.Field);
         }
     }
-    
-    delegate void MyDelegate();
-
 }
