@@ -1,25 +1,21 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Lab3
 {
-    using System;
-    using System.Linq;
-    using System.Net.Sockets;
-    using System.Security.Authentication.ExtendedProtection;
-    using System.Text;
-    using Microsoft.VisualBasic;
-
     public class PlayingField
     {
-        private int N { get; set; }  //dimension (standart is 3)
+        private int N { get; set; } //dimension (standart is 3)
         public int[,] Field { get; set; }
 
         public PlayingField(int n)
         {
             this.N = n;
             Field = new int[n * n, n * n];
-            
+
             for (var i = 0; i < N * N; i++)
             {
                 for (var j = 0; j < N * N; j++)
@@ -28,13 +24,14 @@ namespace Lab3
                 }
             }
         }
+
         private void GenerateBasicField()
         {
             for (var i = 0; i < N * N; i++)
             {
                 for (var j = 0; j < N * N; j++)
                 {
-                    Field[i, j] = (i*N + i/N + j) % (N*N) + 1;
+                    Field[i, j] = (i * N + i / N + j) % (N * N) + 1;
                 }
             }
         }
@@ -88,6 +85,7 @@ namespace Lab3
             }
 
         }
+
         private void Swap_Columns_Area()
         {
             var (randomArea1, randomArea2) = Randomizer.Generate_Random_Areas(N);
@@ -101,12 +99,13 @@ namespace Lab3
                 }
             }
         }
-        
+
         private delegate void MyDelegate();
+
         public void Create_Unique_Field()
         {
             GenerateBasicField();
-            
+
             MyDelegate[] manipulationWithField = new MyDelegate[5];
 
             manipulationWithField[0] = Transposing;
@@ -114,9 +113,9 @@ namespace Lab3
             manipulationWithField[2] = Swap_Columns;
             manipulationWithField[3] = Swap_Rows_Area;
             manipulationWithField[4] = Swap_Columns_Area;
-            
+
             var rnd = new Random();
-            
+
             for (var i = 0; i < 100; i++)
             {
                 var randomAction = rnd.Next(0, 5);
@@ -150,23 +149,122 @@ namespace Lab3
             }
 
             var iterator = 0;
-
-            while (iterator < 40)
+            while (iterator < 35)
             {
                 var rnd = new Random();
                 var row = rnd.Next(0, N * N);
                 var column = rnd.Next(0, N * N);
-                
                 if (look[row, column] == 0)
                 {
                     look[row, column] = 1;
                     iterator += 1;
-                    
+
                     var temp = Field[row, column];
                     Field[row, column] = 0;
                 }
             }
-            Console.WriteLine(ConvertToString());
         }
+
+        public bool NotFull()
+        {
+            for (var i = 0; i < N * N; i++)
+            {
+                for (var j = 0; j < N * N; j++)
+                {
+                    if (Field[i, j] == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool CellIsEmpty(int i, int j)
+        {
+            return Field[i - 1, j - 1] == 0 ? true : false;
+        }
+
+        public void AddCellValue(int i, int j, int value)
+        {
+            Field[i - 1, j - 1] = value;
+        }
+
+        public bool IsValidSolution()
+        {
+            return IsValidRow() && IsValidColumn() && IsValidBox();
+        }
+
+        private bool IsValidRow()
+        {
+            var sum = 0;
+            for (var i = 0; i < N * N; i++)
+            {
+                for (var j = 0; j < N * N; j++)
+                {
+                    sum += Field[i, j];
+                }
+
+                if (sum != 45)
+                {
+                    return false;
+                }
+
+                sum = 0;
+            }
+
+            return true;
+        }
+
+        private bool IsValidColumn()
+        {
+            var sum = 0;
+            for (var i = 0; i < N * N; i++)
+            {
+                for (var j = 0; j < N * N; j++)
+                {
+                    sum += Field[j, i];
+                }
+
+                if (sum != 45)
+                {
+                    return false;
+                }
+
+                sum = 0;
+            }
+
+            return true;
+        }
+
+        private bool IsValidBox()
+        {
+            var sum = 0;
+            for (var l = 0; l < N; l++)
+            {
+                for (var k = 0; k < N; k++)
+                {
+                    for (var i = 0; i < N; i++)
+                    {
+                        for (var j = 0; j < N; j++)
+                        {
+                            sum += Field[i + N * k, j + N * l];
+                        }
+                    }
+
+                    if (sum != 45)
+                    {
+                        return false;
+                    }
+
+                    sum = 0;
+                }
+            }
+
+            return true;
+        }
+
+
     }
 }
