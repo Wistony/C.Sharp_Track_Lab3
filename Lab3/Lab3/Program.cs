@@ -1,38 +1,36 @@
 ﻿using System;
-using System.Linq;
 
 namespace Lab3
 {
-    using System.Reflection.Metadata.Ecma335;
-
     internal static class Program
     {
         private static void Main(string[] args)
         {
-            var field = new PlayingField(3);
-            field.Create_Unique_Field();
-            field.CreatePuzzle();
-            Console.WriteLine(field.IsValidSolution());
-            while (field.NotFull())
+            var game = new Sudoku(3);
+            var gameHistory = new GameHistory();
+            
+            while (game.SudokuPuzzle.NotFull())
             {
-                ConsoleOutput.Print(field.ConvertToString().ToString());
-                var i = Validation.InputValue("Enter row number: ");
-                var j = Validation.InputValue("Enter column number: ");
+                ConsoleOutput.Print(game.SudokuPuzzle.ConvertToString().ToString());
+                
+                var i = Validation.InputValue("Enter row number: ") - 1;
+                var j = Validation.InputValue("Enter column number: ") - 1;
                 var value = Validation.InputValue("Enter cell value: ");
-                if (field.CellIsEmpty(i, j))
-                {
-                    field.AddCellValue(i,j,value);
-                } 
-            }
 
-            if (field.IsValidSolution())
-            {
-                Console.WriteLine("Congratulations! You solve this sudoku!");
+                if(game.SudokuPuzzle.CellIsEmpty(i, j))
+                { 
+                    game.SudokuPuzzle.AddCellValue(i, j, value);
+                    gameHistory.History.Push(game.SaveState(i,j,value));
+                }
+                else
+                {
+                    Console.WriteLine("This cell already has a value");
+                }
             }
-            else
-            {
-                Console.WriteLine("This solution isn`t valid");
-            }
+            
+            Console.WriteLine(game.SudokuPuzzle.IsValidSolution()
+                ? "Congratulations! You solve this sudoku!"
+                : "This solution isn`t valid");
         }
     }
 }
