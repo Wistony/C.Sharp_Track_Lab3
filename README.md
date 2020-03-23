@@ -1,4 +1,4 @@
 ## DesignPatterns
-## Lab #2 - Structural Patterns
+## Lab #3 - Behavioral Patterns
 ### FullName: Androshchuk Maksym
 ### Group: IP-81
