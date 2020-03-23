@@ -10,11 +10,13 @@ namespace Lab3
     {
         private int N { get; set; } //dimension (standart is 3)
         public int[,] Field { get; set; }
+        private delegate void UniqueField();
+
 
         public PlayingField(int n)
         {
-            this.N = n;
-            Field = new int[n * n, n * n];
+            N = n;
+            Field = new int[N * N, N * N];
 
             for (var i = 0; i < N * N; i++)
             {
@@ -25,7 +27,7 @@ namespace Lab3
             }
         }
 
-        private void GenerateBasicField()
+        public void GenerateBasicField()
         {
             for (var i = 0; i < N * N; i++)
             {
@@ -99,14 +101,9 @@ namespace Lab3
                 }
             }
         }
-
-        private delegate void MyDelegate();
-
         public void Create_Unique_Field()
         {
-            GenerateBasicField();
-
-            MyDelegate[] manipulationWithField = new MyDelegate[5];
+            UniqueField[] manipulationWithField = new UniqueField[5];
 
             manipulationWithField[0] = Transposing;
             manipulationWithField[1] = Swap_Rows;
@@ -137,7 +134,7 @@ namespace Lab3
             return str;
         }
 
-        public void CreatePuzzle()
+        public void GeneratePuzzle()
         {
             int[,] look = new int[N * N, N * N];
             for (var i = 0; i < N * N; i++)
@@ -159,12 +156,12 @@ namespace Lab3
                     look[row, column] = 1;
                     iterator += 1;
 
-                    var temp = Field[row, column];
                     Field[row, column] = 0;
                 }
             }
         }
-
+        
+        
         public bool NotFull()
         {
             for (var i = 0; i < N * N; i++)
@@ -183,12 +180,12 @@ namespace Lab3
 
         public bool CellIsEmpty(int i, int j)
         {
-            return Field[i - 1, j - 1] == 0 ? true : false;
+            return Field[i, j] == 0;
         }
 
         public void AddCellValue(int i, int j, int value)
         {
-            Field[i - 1, j - 1] = value;
+            Field[i, j] = value;
         }
 
         public bool IsValidSolution()
@@ -205,15 +202,12 @@ namespace Lab3
                 {
                     sum += Field[i, j];
                 }
-
                 if (sum != 45)
                 {
                     return false;
                 }
-
                 sum = 0;
             }
-
             return true;
         }
 
@@ -226,19 +220,17 @@ namespace Lab3
                 {
                     sum += Field[j, i];
                 }
-
                 if (sum != 45)
                 {
                     return false;
                 }
-
                 sum = 0;
             }
-
             return true;
         }
-
-        private bool IsValidBox()
+        
+        //Check all 9 square 3x3 for validy
+        private bool IsValidBox() 
         {
             var sum = 0;
             for (var l = 0; l < N; l++)
@@ -252,16 +244,13 @@ namespace Lab3
                             sum += Field[i + N * k, j + N * l];
                         }
                     }
-
                     if (sum != 45)
                     {
                         return false;
                     }
-
                     sum = 0;
                 }
             }
-
             return true;
         }
 

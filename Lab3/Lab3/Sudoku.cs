@@ -5,7 +5,7 @@ namespace Lab3
 {
     public class Sudoku
     {
-        private PlayingField SudokuPuzzle { get; set; }
+        public PlayingField SudokuPuzzle { get; set; }
         
         public Sudoku(int n)
         {
@@ -18,30 +18,18 @@ namespace Lab3
             SudokuPuzzle.Create_Unique_Field();
             SudokuPuzzle.GeneratePuzzle();
         }
-
-        public void StartGame()
-        {
-            while (SudokuPuzzle.NotFull())
-            {
-                ConsoleOutput.Print(SudokuPuzzle.ConvertToString().ToString());
-                var i = Validation.InputValue("Enter row number: ");
-                var j = Validation.InputValue("Enter column number: ");
-                var value = Validation.InputValue("Enter cell value: ");
-                if (SudokuPuzzle.CellIsEmpty(i, j))
-                {
-                    SudokuPuzzle.AddCellValue(i,j,value);
-                } 
-                
-                Console.WriteLine(SudokuPuzzle.IsValidSolution()
-                    ? "Congratulations! You solve this sudoku!"
-                    : "This solution isn`t valid");
-            }
-        }
-
-        public SudokuMemento SaveMove(int row, int column, int value)
+        
+        public SudokuMemento SaveState(int row, int column, int value)
         {
             return new SudokuMemento(row, column, value);
+        }
+
+        public void RestoreState(SudokuMemento state)
+        {
+            var i = state.Row;
+            var j = state.Column;
             
+            SudokuPuzzle.AddCellValue(i,j,0);
         }
     }
 }

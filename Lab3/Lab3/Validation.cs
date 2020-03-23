@@ -2,7 +2,7 @@ using System;
 
 namespace Lab3
 {
-    public class Validation
+    public static class Validation
     {
         public static int InputValue(string message)
         {
@@ -24,11 +24,11 @@ namespace Lab3
             }
             return value;
         }
-        
+
         private static bool NumValidation(string str)
         {
             var value = int.Parse(str);
-            return (value > 0 && value < 10) ? true : false;
+            return value > 0 && value < 10;
         }
     }
 }
