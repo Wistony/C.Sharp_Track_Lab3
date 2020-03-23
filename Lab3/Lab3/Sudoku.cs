@@ -5,13 +5,14 @@ namespace Lab3
 {
     public class Sudoku
     {
-        public PlayingField SudokuPuzzle { get; set; }
+        public PlayingField SudokuPuzzle { get; }
         
         public Sudoku(int n)
         {
             SudokuPuzzle = new PlayingField(n);
         }
 
+        //create unique puzzle
         public void CreatePuzzle()
         {
             SudokuPuzzle.GenerateBasicField();

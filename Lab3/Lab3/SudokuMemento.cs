@@ -7,9 +7,9 @@ namespace Lab3
 
     public class SudokuMemento
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
-        public int Value { get; set; }
+        public int Row { get; private set; }
+        public int Column { get; private set; }
+        public int Value { get; private set; }
 
         public SudokuMemento(int row, int column, int value)
         {
@@ -21,8 +21,7 @@ namespace Lab3
     
     public class GameHistory
     {
-        public Stack<SudokuMemento> History { get; set; }
-
+        public Stack<SudokuMemento> History { get; private set; }
         public GameHistory()
         {
             History = new Stack<SudokuMemento>();

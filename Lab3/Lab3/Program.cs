@@ -8,8 +8,8 @@ namespace Lab3
         {
             var game = new Sudoku(3);
             var gameHistory = new GameHistory();
-            
             game.CreatePuzzle();
+            
             var flag = true;
             while (flag)
             {
@@ -27,7 +27,7 @@ namespace Lab3
                         var i = Validation.InputValue("Enter row number: ") - 1;
                         var j = Validation.InputValue("Enter column number: ") - 1;
                         var value = Validation.InputValue("Enter cell value: ");
-
+                        
                         if(game.SudokuPuzzle.CellIsEmpty(i, j))
                         { 
                             game.SudokuPuzzle.AddCellValue(i, j, value);
@@ -45,6 +45,7 @@ namespace Lab3
                         if (!gameHistory.IsEmpty())
                         {
                             game.RestoreState(gameHistory.Undo());
+                            Console.WriteLine("One move canceled");
                         }
                         else
                         {

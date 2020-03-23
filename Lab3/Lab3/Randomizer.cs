@@ -4,6 +4,7 @@ namespace Lab3
 {
     public static class Randomizer
     {
+        //choose 2 random line
         public static (int randomLine1, int randomLine2) Generate_Random_Lines(int n)
         {
             var rnd = new Random();
@@ -21,6 +22,7 @@ namespace Lab3
             return (randomLine1, randomLine2);
         }
 
+        //choose 2 random box(square 3x3) 
         public static (int area1, int area2) Generate_Random_Areas(int n)
         {
             var rnd = new Random();

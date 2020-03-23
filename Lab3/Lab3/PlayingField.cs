@@ -8,8 +8,9 @@ namespace Lab3
 {
     public class PlayingField
     {
-        private int N { get; set; } //dimension (standart is 3)
-        public int[,] Field { get; set; }
+        //dimension (standart is 3)
+        private int N { get; set; } 
+        private int[,] Field { get; set; }
         private delegate void UniqueField();
 
 
@@ -17,7 +18,6 @@ namespace Lab3
         {
             N = n;
             Field = new int[N * N, N * N];
-
             for (var i = 0; i < N * N; i++)
             {
                 for (var j = 0; j < N * N; j++)
@@ -50,7 +50,7 @@ namespace Lab3
                 }
             }
         }
-
+        
         private void Swap_Rows()
         {
             var (randomLine1, randomLine2) = Randomizer.Generate_Random_Lines(N);
@@ -161,7 +161,7 @@ namespace Lab3
             }
         }
         
-        
+        // check that all cells have value 
         public bool NotFull()
         {
             for (var i = 0; i < N * N; i++)
@@ -183,16 +183,18 @@ namespace Lab3
             return Field[i, j] == 0;
         }
 
+        // add value for particular cell
         public void AddCellValue(int i, int j, int value)
         {
             Field[i, j] = value;
         }
 
+        // check that all row, column and box have only one numbers from 1 to 9
         public bool IsValidSolution()
         {
             return IsValidRow() && IsValidColumn() && IsValidBox();
         }
-
+        
         private bool IsValidRow()
         {
             var sum = 0;

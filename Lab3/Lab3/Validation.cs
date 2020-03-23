@@ -4,6 +4,7 @@ namespace Lab3
 {
     public static class Validation
     {
+        //method for input value for make move
         public static int InputValue(string message)
         {
             var flag = true;
@@ -25,6 +26,7 @@ namespace Lab3
             return value;
         }
 
+        //check number for validy(number must be from 1 to 9)
         private static bool NumValidation(string str)
         {
             var value = int.Parse(str);
