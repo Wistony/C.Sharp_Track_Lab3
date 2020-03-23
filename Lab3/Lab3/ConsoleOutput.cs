@@ -28,7 +28,7 @@ namespace Lab3
         }
     }
     
-    static class Extensions
+    internal  static class Extensions
     {
         public static IEnumerable<string> Cut(this string input, int length)
         {
